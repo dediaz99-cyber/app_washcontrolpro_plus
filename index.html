@@ -12,70 +12,96 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        /* COLORES INSTITUCIONALES - PERSONALIZACIÓN VERSIÓN PLUS (LAVAFANTE) */
+        /* PALETA DE COLORES PREMIUM - FONDO CORPORATIVO Y BORDES MAGENTA (LAVAFANTE) */
         :root { 
-            --primary: #00469c;       /* Azul Rey Dominante de Lavafante */
-            --accent: #00a8e5;        /* Azul Claro / Cyan de acento */
+            --bg-corporate: #00469c;   /* Azul Rey Dominante para el Fondo General */
+            --brand-pink: #e6007e;     /* Rosado/Magenta del Elefante para Marcos y Detalles */
             --success: #2b8a3e;       /* Verde para estados positivos/recaudo */
             --danger: #c92a2a;        /* Rojo para acciones críticas */
-            --dark: #1a2530;          /* Gris oscuro texturizado */
-            --light: #f4f7f6;         /* Fondo gris claro limpio */
+            --dark: #1a2530;          /* Gris oscuro para textos */
+            --light: #f8f9fa;         /* Fondo claro para inputs */
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #e9eff5; color: var(--dark); padding: 10px; padding-bottom: 30px; }
+        
+        /* Aplicación del fondo azul institucional */
+        body { background-color: var(--bg-corporate); color: var(--dark); padding: 10px; padding-bottom: 30px; }
         .container { max-width: 500px; margin: 0 auto; }
         
-        /* DISEÑO DE CABECERA CON LOGO - VERSIÓN PLUS */
+        /* DISEÑO DE CABECERA PREMIUM */
         header { 
             text-align: center; 
-            padding: 15px 0; 
-            color: var(--primary); 
+            padding: 20px 0 15px 0; 
+            color: white; /* Texto en blanco para resaltar sobre el fondo azul */
             font-weight: bold; 
             font-size: 24px; 
             display: flex; 
             flex-direction: column;
             align-items: center; 
             justify-content: center; 
-            gap: 10px; 
+            gap: 12px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .brand-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--accent);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 180px;
+            max-height: 75px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            object-fit: contain;
+            padding: 6px;
             background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
+        /* CUADROS DE MANDO E INFORMACIÓN CON MARCOS ROSADOS */
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-card { background: white; padding: 12px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
-        .stat-card.recaudo { border-top-color: var(--success); }
+        
+        .stat-card { 
+            background: white; 
+            padding: 14px; 
+            border-radius: 14px; 
+            text-align: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+            border: 3px solid var(--brand-pink); /* Marco Rosado Lavafante */
+        }
         .stat-label { font-size: 11px; text-transform: uppercase; color: #6c757d; font-weight: bold; margin-bottom: 5px; }
-        .stat-value { font-size: 20px; font-weight: bold; color: var(--primary); }
+        .stat-value { font-size: 22px; font-weight: bold; color: var(--bg-corporate); }
         .stat-card.recaudo .stat-value { color: var(--success); }
         
-        .card { background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 15px; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #495057; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 8px; font-size: 15px; outline: none; background-color: #f8f9fa; }
-        input:focus, select:focus { border-color: var(--accent); background-color: white; box-shadow: 0 0 0 3px rgba(0, 168, 229, 0.15); }
+        /* Tarjetas de los formularios con marcos rosados */
+        .card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15); 
+            margin-bottom: 15px; 
+            border: 3px solid var(--brand-pink); /* Marco Rosado Lavafante */
+        }
+        
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #495057; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 8px; font-size: 15px; outline: none; background-color: var(--light); }
+        input:focus, select:focus { border-color: var(--brand-pink); background-color: white; box-shadow: 0 0 0 3px rgba(230, 0, 126, 0.15); }
         
         .alert-box { background-color: #fff4e6; border: 1px dashed #fd7e14; border-radius: 8px; padding: 10px; margin-bottom: 15px; }
         
-        /* BOTONES ADAPTADOS A LA MARCA */
-        .btn { width: 100%; padding: 14px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; color: white; transition: background 0.2s; }
-        .btn-primary { background-color: var(--primary); }
-        .btn-primary:hover { background-color: #003373; }
+        /* BOTÓN DE ACCIÓN EN COLOR ROSADO RESALTANTE */
+        .btn { width: 100%; padding: 15px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 12px; color: white; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .btn:active { transform: scale(0.98); }
+        
+        .btn-primary { background-color: var(--brand-pink); box-shadow: 0 4px 8px rgba(230, 0, 126, 0.25); }
+        .btn-primary:hover { background-color: #bd0066; }
+        
         .btn-success { background-color: var(--success); }
-        .btn-danger { background-color: #e64980; opacity: 0.9; font-size: 13px; padding: 8px; }
+        .btn-danger { background-color: #e64980; opacity: 0.95; font-size: 13px; padding: 10px; color: white; border: 1px solid rgba(255,255,255,0.2); }
         .btn-delete { background-color: var(--danger); padding: 6px 12px; font-size: 13px; font-weight: bold; border-radius: 6px; width: auto; margin: 0; }
         
-        .records-title { font-weight: bold; margin-bottom: 10px; color: #495057; }
-        .record-item { background: white; padding: 12px; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border-left: 5px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        /* REGISTROS INDIVIDUALES */
+        .records-title { font-weight: bold; margin-bottom: 12px; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .record-item { background: white; padding: 12px; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-left: 6px solid var(--brand-pink); display: flex; justify-content: space-between; align-items: center; }
         .record-info p { font-size: 13px; margin-bottom: 2px; color: #6c757d; }
-        .badge-placa { background: var(--accent); color: white; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 13px; display: inline-block; margin-bottom: 4px; }
+        .badge-placa { background: var(--bg-corporate); color: white; font-weight: bold; padding: 3px 8px; border-radius: 4px; font-size: 13px; display: inline-block; margin-bottom: 4px; }
         .record-val { text-align: right; font-weight: bold; font-size: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
     </style>
 </head>
@@ -83,9 +109,9 @@
 
 <div class="container">
     <header>
-        <!-- Renderizado automático del logo del cliente en Versión PLUS -->
+        <!-- Contenedor adaptativo PLUS -->
         <img src="logo.jpg" alt="Logo Cliente" class="brand-logo" onerror="this.style.display='none';">
-        <span>WASH CONTROL PRO</span>
+        <span style="letter-spacing: 1px; margin-top: 5px;">WASH CONTROL PRO</span>
     </header>
 
     <div class="dashboard">
@@ -157,8 +183,8 @@
     <button class="btn btn-success" onclick="exportarExcel()">📥 Descargar Jornada en Excel</button>
     <button class="btn btn-danger" onclick="reiniciarJornada()">⚠️ Reiniciar Jornada (Solo Dueño)</button>
 
-    <div class="card">
-        <div class="records-title">Movimientos de Hoy:</div>
+    <div class="card" style="border-top: 8px solid var(--brand-pink);">
+        <div class="records-title" style="color: var(--dark); text-shadow: none;">Movimientos de Hoy:</div>
         <div id="lista-registros"></div>
     </div>
 </div>
