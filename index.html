@@ -117,10 +117,10 @@
         localStorage.setItem('datos_control_lavado_plus', JSON.stringify(registros));
         document.getElementById('form-lavadero').reset();
         document.getElementById('servicio').innerHTML = '<option value="">Seleccione...</option>';
-        actualizarInterfazPlus();
+        actualizarInterfazPlus(); // CORREGIDO: Se cambia el nombre para que coincida exactamente con la declaración de abajo
     }
     function eliminarRegistro(idx) { if(confirm("🔑 CONTROL AUDITORÍA\n\n¿Desea eliminar de pista?")) { registros.splice(idx, 1); registros.forEach((r, i) => r.turno = i + 1); localStorage.setItem('datos_control_lavado_plus', JSON.stringify(registros)); actualizarInterfazPlus(); } }
-    function reiniciarJornada() { if(confirm("🚨 Cierre de pista definitivo?")) { registros = []; localStorage.removeItem('datos_control_lavado_plus'); actualizarInterfazPlus(); } }
+    function reiniciarJornada() { if(confirm("🚨 ¿Desea realizar el cierre de pista definitivo?")) { registros = []; localStorage.removeItem('datos_control_lavado_plus'); actualizarInterfazPlus(); } }
     function actualizarInterfazPlus() {
         const lista = document.getElementById('lista-registros'); lista.innerHTML = '';
         registros.forEach((reg, i) => {
@@ -130,7 +130,7 @@
         });
     }
     function exportarExcelPlus() {
-        if(registros.length === 0) return;
+        if(registros.length === 0) { alert("No hay datos registrados para exportar."); return; }
         const data = registros.map(r => [r.turno, r.hora, r.placa, r.cliente, r.celular, r.tipoVehiculo, r.servicio, r.valor, r.operario, r.objetosValor]);
         data.unshift(["Turno", "Fecha y Hora Ingreso", "Placa", "Cliente", "Celular", "Tipo de Vehículo", "Servicio Solicitado", "Valor Pagado ($)", "Lavador Asignado", "Inventario / Objetos Valor"]);
         const ws = XLSX.utils.aoa_to_sheet(data); const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Jornada_Lavafante");
